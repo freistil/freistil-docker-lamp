@@ -24,14 +24,12 @@ ADD mysql/create_admin_user.sh /setup/mysql-create_admin_user.sh
 ADD mysql/my.cnf /etc/mysql/conf.d/my.cnf
 ADD mysql/supervisord.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 RUN rm -rf /var/lib/mysql/*
+VOLUME  "/var/lib/mysql"
 
 # PHP
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
 ADD php/setup.sh /setup/php-setup.sh
-
-# Add volumes for MySQL
-VOLUME  ["/etc/mysql", "/var/lib/mysql" ]
 
 # Expose HTTP and MySQL ports
 EXPOSE 80 3306
