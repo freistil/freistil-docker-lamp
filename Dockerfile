@@ -4,7 +4,16 @@ MAINTAINER Jochen Lillich <jochen@freistil.it>
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
-  apt-get -y install supervisor git apache2 libapache2-mod-php5 mysql-server php5-mysql pwgen php-apc php5-mcrypt
+  apt-get -y install \
+  apache2 \
+  git \
+  libapache2-mod-php5 \
+  mysql-server \
+  php-apc \
+  php5-mcrypt \
+  php5-mysql \
+  pwgen \
+  supervisor
 
 # Image setup scripts
 ADD run.sh /run.sh
