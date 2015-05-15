@@ -1,6 +1,6 @@
 # Image-specific settings
 IMAGE_NAME = freistil/lamp
-RUN_OPTS = -it -p 80:80
+RUN_OPTS = -d -p 80:80 -p 3306:3306
 
 # Determine current Git commit
 GIT_SHA := $(shell git rev-parse HEAD)
