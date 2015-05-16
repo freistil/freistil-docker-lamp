@@ -16,4 +16,4 @@ run:
 # Push to registry
 push:
 	docker tag -f ${IMAGE_NAME}:${GIT_SHA} ${IMAGE_NAME}:latest
-	docker push
+	docker push ${IMAGE_NAME}
