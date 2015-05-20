@@ -33,7 +33,7 @@ ADD mysql/create_admin_user.sh /setup/mysql-create_admin_user.sh
 ADD mysql/my.cnf /etc/mysql/conf.d/my.cnf
 ADD mysql/supervisord.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 RUN rm -rf /var/lib/mysql/*
-VOLUME  "/var/lib/mysql"
+VOLUME /var/lib/mysql
 
 # PHP
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
