@@ -47,4 +47,5 @@ ADD php/init.sh /setup/init/10-php.sh
 EXPOSE 80 3306
 
 # Boot container
+RUN chmod 755 /run.sh
 CMD ["/run.sh"]
