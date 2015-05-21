@@ -1,6 +1,8 @@
 #!/bin/bash
 
-/setup/mysql-setup.sh
-/setup/php-setup.sh
+for startupscript in /setup/*-setup.sh; do
+  echo "=> Executing $startupscript"
+  $startupscript
+done
 
 exec supervisord -n

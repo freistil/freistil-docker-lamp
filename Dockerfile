@@ -5,15 +5,19 @@ MAINTAINER Jochen Lillich <jochen@freistil.it>
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
   apt-get -y install \
-  apache2 \
-  git \
-  libapache2-mod-php5 \
-  mysql-server \
-  php-apc \
-  php5-mcrypt \
-  php5-mysql \
-  pwgen \
-  supervisor
+    apache2 \
+    git \
+    libapache2-mod-php5 \
+    mysql-server \
+    php-apc \
+    php5-curl \
+    php5-gd \
+    php5-mcrypt \
+    php5-mysql \
+    pwgen \
+    supervisor \
+  && apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 # Image setup scripts
 ADD run.sh /run.sh
@@ -23,16 +27,16 @@ ADD apache/start.sh /setup/apache-start.sh
 ADD apache/default_vhost.conf /etc/apache2/sites-available/000-default.conf
 ADD apache/supervisord.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-RUN sed -i -e 's/^ErrorLog .*/ErrorLog \/dev\/stdout/' /etc/apache2/apache2.conf
 RUN a2enmod rewrite
 
 # MySQL
 ADD mysql/start.sh /setup/mysql-start.sh
-ADD mysql/setup.sh /setup/mysql-setup.sh
+ADD mysql/setup.sh /setup/10-mysql-setup.sh
 ADD mysql/setup-init.sh /setup/mysql-setup-init.sh
 ADD mysql/setup-start.sh /setup/mysql-setup-start.sh
 ADD mysql/setup-stop.sh /setup/mysql-setup-stop.sh
-ADD mysql/setup-user.sh /setup/mysql-setup-user.sh
+ADD mysql/setup-admin.sh /setup/mysql-setup-admin.sh
+ADD mysql/setup-database.sh /setup/mysql-setup-database.sh
 ADD mysql/my.cnf /etc/mysql/conf.d/my.cnf
 ADD mysql/supervisord.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 RUN rm -rf /var/lib/mysql/*
@@ -41,7 +45,7 @@ VOLUME /var/lib/mysql
 # PHP
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
-ADD php/setup.sh /setup/php-setup.sh
+ADD php/setup.sh /setup/10-php-setup.sh
 
 # Expose HTTP and MySQL ports
 EXPOSE 80 3306
