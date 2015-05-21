@@ -28,9 +28,11 @@ RUN a2enmod rewrite
 
 # MySQL
 ADD mysql/start.sh /setup/mysql-start.sh
-ADD mysql/init_db.sh /setup/mysql-init_db.sh
 ADD mysql/setup.sh /setup/mysql-setup.sh
-ADD mysql/create_admin_user.sh /setup/mysql-create_admin_user.sh
+ADD mysql/setup-init.sh /setup/mysql-setup-init.sh
+ADD mysql/setup-start.sh /setup/mysql-setup-start.sh
+ADD mysql/setup-stop.sh /setup/mysql-setup-stop.sh
+ADD mysql/setup-user.sh /setup/mysql-setup-user.sh
 ADD mysql/my.cnf /etc/mysql/conf.d/my.cnf
 ADD mysql/supervisord.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 RUN rm -rf /var/lib/mysql/*
