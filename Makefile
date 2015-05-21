@@ -16,4 +16,4 @@ run:
 
 # Push to registry
 push:
-	docker push ${IMAGE_NAME}
+	docker push ${IMAGE_NAME}:latest
