@@ -23,6 +23,7 @@ ADD apache/start.sh /setup/apache-start.sh
 ADD apache/default_vhost.conf /etc/apache2/sites-available/000-default.conf
 ADD apache/supervisord.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+RUN sed -i -e 's/^ErrorLog .*/ErrorLog \/dev\/stdout/' /etc/apache2/apache2.conf
 RUN a2enmod rewrite
 
 # MySQL
