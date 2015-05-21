@@ -30,13 +30,9 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN a2enmod rewrite
 
 # MySQL
+ADD mysql/init.sh /setup/init/10-mysql.sh
+ADD mysql/init/* /setup/init/mysql/
 ADD mysql/start.sh /setup/mysql-start.sh
-ADD mysql/setup.sh /setup/10-mysql-setup.sh
-ADD mysql/setup-init.sh /setup/mysql-setup-init.sh
-ADD mysql/setup-start.sh /setup/mysql-setup-start.sh
-ADD mysql/setup-stop.sh /setup/mysql-setup-stop.sh
-ADD mysql/setup-admin.sh /setup/mysql-setup-admin.sh
-ADD mysql/setup-database.sh /setup/mysql-setup-database.sh
 ADD mysql/my.cnf /etc/mysql/conf.d/my.cnf
 ADD mysql/supervisord.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 RUN rm -rf /var/lib/mysql/*
@@ -45,11 +41,11 @@ VOLUME /var/lib/mysql
 # PHP
 ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
-ADD php/setup.sh /setup/10-php-setup.sh
+ADD php/init.sh /setup/init/10-php.sh
 
 # Expose HTTP and MySQL ports
 EXPOSE 80 3306
 
 # Boot container
-RUN chmod 755 /run.sh /setup/*.sh
+RUN chmod 755 /run.sh /setup/init/*.sh /setup/init/*/*.sh
 CMD ["/run.sh"]

@@ -1,8 +1,6 @@
 #!/bin/bash
 
-for initscript in /setup/init/*.sh; do
+for initscript in /setup/init/mysql/*.sh; do
   echo "=> Executing $initscript"
   $initscript
 done
-
-exec supervisord -n
